@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anacronismo Estadístico — IPC Argentina 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rojo: #B7281B;
+    --rosa: #FFEBE8;
+    --oro: #E6AF00;
+    --menta: #D7F7E1;
+    --azul: #1D3ECF;
+    --blanco: #FAFAF8;
+    --gris-claro: #F2F0EC;
+    --gris-texto: #2C2C2A;
+    --gris-mid: #7A7A72;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--blanco);
+    color: var(--gris-texto);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* HERO HEADER */
+  .hero {
+    background: var(--azul);
+    color: white;
+    padding: 64px 48px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(230, 175, 0, 0.15);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(183, 40, 27, 0.12);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--oro);
+    color: var(--gris-texto);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 46px);
+    line-height: 1.15;
+    max-width: 780px;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--oro);
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta-item {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    font-weight: 300;
+  }
+
+  .hero-meta-item strong {
+    display: block;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  /* TAB NAV */
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--gris-claro);
+    background: white;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 48px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 18px 20px 15px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--gris-mid);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    letter-spacing: 0.01em;
+    margin-bottom: -2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tab-btn .tab-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--gris-claro);
+    color: var(--gris-mid);
+    transition: all 0.2s;
+  }
+
+  .tab-btn:hover { color: var(--azul); }
+  .tab-btn:hover .tab-num { background: var(--rosa); color: var(--rojo); }
+
+  .tab-btn.active {
+    color: var(--azul);
+    border-bottom-color: var(--azul);
+    font-weight: 600;
+  }
+
+  .tab-btn.active .tab-num {
+    background: var(--azul);
+    color: white;
+  }
+
+  /* CONTENT AREA */
+  .content-area {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 48px;
+  }
+
+  .tab-panel { display: none; animation: fadeIn 0.3s ease; }
+  .tab-panel.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION TITLES */
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.2;
+    color: var(--gris-texto);
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--azul);
+  }
+
+  .lead {
+    font-size: 17px;
+    line-height: 1.75;
+    color: #444;
+    margin-bottom: 36px;
+    font-weight: 300;
+    border-left: 3px solid var(--oro);
+    padding-left: 20px;
+  }
+
+  p {
+    font-size: 15.5px;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 18px;
+  }
+
+  /* HIGHLIGHT BOX */
+  .callout {
+    border-radius: 4px;
+    padding: 24px 28px;
+    margin: 28px 0;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .callout-rojo { background: var(--rosa); border-left: 4px solid var(--rojo); }
+  .callout-oro { background: #FFF9E6; border-left: 4px solid var(--oro); }
+  .callout-azul { background: #EEF1FB; border-left: 4px solid var(--azul); }
+  .callout-menta { background: var(--menta); border-left: 4px solid #2EA84D; }
+
+  .callout strong { color: var(--gris-texto); display: block; font-weight: 600; margin-bottom: 6px; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+    margin: 28px 0;
+  }
+
+  .data-table thead th {
+    background: var(--azul);
+    color: white;
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+  }
+
+  .data-table thead th:first-child { border-radius: 4px 0 0 0; }
+  .data-table thead th:last-child { border-radius: 0 4px 0 0; }
+
+  .data-table tbody tr { border-bottom: 1px solid var(--gris-claro); transition: background 0.15s; }
+  .data-table tbody tr:hover { background: var(--rosa); }
+  .data-table tbody td { padding: 16px 18px; vertical-align: top; line-height: 1.65; color: #444; }
+  .data-table tbody td:first-child { font-weight: 500; color: var(--gris-texto); width: 38%; }
+
+  /* CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin: 28px 0;
+  }
+
+  .card {
+    background: var(--gris-claro);
+    border-radius: 6px;
+    padding: 24px 22px;
+    border-top: 4px solid var(--gris-mid);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .card.rojo { border-top-color: var(--rojo); }
+  .card.oro { border-top-color: var(--oro); }
+  .card.azul { border-top-color: var(--azul); }
+  .card.menta { border-top-color: #2EA84D; }
+
+  .card-icon { font-size: 28px; margin-bottom: 12px; }
+  .card h3 { font-family: 'DM Serif Display', serif; font-size: 18px; margin-bottom: 10px; }
+  .card p { font-size: 14px; margin: 0; line-height: 1.65; }
+
+  /* TAG */
+  .tag {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin: 3px 3px 3px 0;
+  }
+
+  .tag-rojo { background: var(--rosa); color: var(--rojo); }
+  .tag-azul { background: #EEF1FB; color: var(--azul); }
+  .tag-oro { background: #FFF9E6; color: #8A6800; }
+  .tag-menta { background: var(--menta); color: #1A7A37; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--gris-claro); margin: 36px 0; }
+
+  /* IMPACT ITEMS */
+  .impact-list { list-style: none; margin: 24px 0; }
+  .impact-list li {
+    display: flex;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--gris-claro);
+    align-items: flex-start;
+  }
+
+  .impact-list li:last-child { border-bottom: none; }
+
+  .impact-num {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--azul);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .impact-content h4 {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 6px;
+    color: var(--gris-texto);
+  }
+
+  .impact-content p { font-size: 14.5px; margin: 0; }
+
+  /* CONCLUSION BLOCK */
+  .conclusion-block {
+    background: var(--azul);
+    color: white;
+    border-radius: 8px;
+    padding: 40px 44px;
+    margin-top: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .conclusion-block::before {
+    content: '"';
+    font-family: 'DM Serif Display', serif;
+    font-size: 180px;
+    line-height: 1;
+    position: absolute;
+    top: -20px; right: 24px;
+    color: rgba(255,255,255,0.07);
+    pointer-events: none;
+  }
+
+  .conclusion-block h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    margin-bottom: 16px;
+    color: var(--oro);
+  }
+
+  .conclusion-block p {
+    color: rgba(255,255,255,0.85);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .hero { padding: 40px 24px 36px; }
+    .tab-nav { padding: 0 16px; }
+    .content-area { padding: 36px 24px; }
+    .data-table { font-size: 13px; }
+    .data-table tbody td { padding: 12px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">Análisis Estadístico Avanzado · Confidencial · Mayo 2026</div>
+  <h1>Anacronismo Estadístico y<br><em>Distorsión Macroeconómica</em></h1>
+  <p style="color:rgba(255,255,255,0.7);font-size:16px;max-width:620px;margin-top:12px;font-weight:300;">Informe Crítico sobre las Falencias Metodológicas del IPC Nacional en la Argentina de 2026</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><strong>Área</strong>Dirección de Proyectos y Consultoría de Portafolio</div>
+    <div class="hero-meta-item"><strong>Materia</strong>Econometría Aplicada · Mercado de Capitales</div>
+    <div class="hero-meta-item"><strong>Base cuestionada</strong>ENGHo 2004/2005 (más de 20 años)</div>
+    <div class="hero-meta-item"><strong>Ubicación</strong>Buenos Aires, Argentina</div>
+  </div>
+</header>
+
+<!-- TABS -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab(0)">
+    <span class="tab-num">1</span> Introducción
+  </button>
+  <button class="tab-btn" onclick="switchTab(1)">
+    <span class="tab-num">2</span> Lo Obsoleto
+  </button>
+  <button class="tab-btn" onclick="switchTab(2)">
+    <span class="tab-num">3</span> El Vacío Digital
+  </button>
+  <button class="tab-btn" onclick="switchTab(3)">
+    <span class="tab-num">4</span> Heterogeneidad
+  </button>
+  <button class="tab-btn" onclick="switchTab(4)">
+    <span class="tab-num">5</span> Efecto Cascada
+  </button>
+  <button class="tab-btn" onclick="switchTab(5)">
+    <span class="tab-num">6</span> Conclusión
+  </button>
+</nav>
+
+<!-- CONTENT -->
+<main class="content-area">
+
+  <!-- TAB 1: INTRODUCCIÓN -->
+  <section class="tab-panel active" id="panel-0">
+    <div class="section-label">Sección 1 · Problema Estructural</div>
+    <h2 class="section-title">El Sesgo de Selección como<br><em>falla de origen</em></h2>
+
+    <p class="lead">El IPC Nacional vigente opera bajo una arquitectura de ponderaciones construida con datos de 2004/2005. En 2026, eso no es un error de muestreo: es un sesgo estadístico estructural con consecuencias sistémicas.</p>
+
+    <p>En la ciencia económica, la validez de cualquier inferencia predictiva o de diagnóstico depende críticamente de la calidad y representatividad de sus datos de entrada. Cuando un indicador soberano de la envergadura del Índice de Precios al Consumidor opera bajo una arquitectura de ponderaciones obsoleta, la brecha entre la inflación registrada y la inflación efectiva deja de ser un mero error de muestreo aleatorio para transformarse en un sesgo estadístico estructural.</p>
+
+    <div class="callout callout-rojo">
+      <strong>⚠ Problema central</strong>
+      El IPC Nacional vigente (Base Diciembre 2016 = 100) continúa estructurado fundamentalmente sobre los patrones de consumo relevados en la ENGHo 2004/2005. Tras la suspensión de la transición hacia la base ENGHo 2017/2018, el sistema de medición arrastra más de dos décadas de desactualización en la conducta del consumidor.
+    </div>
+
+    <p>Este desfase metodológico distorsiona la asignación de recursos, altera las valuaciones en el mercado de capitales y afecta severamente el cálculo del ingreso real de los hogares argentinos.</p>
+
+    <div class="cards-grid">
+      <div class="card rojo">
+        <div class="card-icon">📅</div>
+        <h3>+20 años de desfase</h3>
+        <p>La base de consumo data de 2004/2005. La estructura económica argentina cambió radicalmente desde entonces.</p>
+      </div>
+      <div class="card oro">
+        <div class="card-icon">📉</div>
+        <h3>Sesgo sistemático</h3>
+        <p>No es ruido aleatorio. Es un sesgo estructural que subestima la inflación efectiva en períodos de alta volatilidad de servicios.</p>
+      </div>
+      <div class="card azul">
+        <div class="card-icon">🏛️</div>
+        <h3>Decisión política</h3>
+        <p>La suspensión de la actualización metodológica agrava el problema: fue una elección, no una limitación técnica.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 2: LO OBSOLETO -->
+  <section class="tab-panel" id="panel-1">
+    <div class="section-label">Sección 2 · Arqueología del Consumo</div>
+    <h2 class="section-title">Lo que está y<br><em>debería eliminarse</em></h2>
+
+    <p class="lead">La inclusión de bienes y servicios obsoletos diluye la sensibilidad del índice frente a las variaciones reales de los precios relativos. Al asignarse ponderaciones a categorías inexistentes, se reduce artificialmente el impacto de los rubros dinámicos.</p>
+
+    <p>Dentro de la matriz de relevamiento actual del INDEC, persisten componentes que responden a un paradigma tecnológico y cultural completamente perimido. El encuestador se ve obligado a sustituir o imputar, capturando ruido estadístico en lugar de transacciones reales.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Componente Anacrónico</th>
+          <th>Falla Metodológica y Distorsión Asociada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            Equipos de audio portátiles<br>
+            <span class="tag tag-rojo">Discmans / Walkmans / MP3</span>
+          </td>
+          <td>Falta absoluta de oferta representativa. El encuestador se ve obligado a sustituir el bien de forma forzada o a imputar variaciones de precios teóricas, capturando ruido estadístico en lugar de transacciones reales.</td>
+        </tr>
+        <tr>
+          <td>
+            Soportes físicos magnéticos y ópticos<br>
+            <span class="tag tag-rojo">Diskettes / CD-ROMs / Cassettes</span>
+          </td>
+          <td>Bienes desplazados al 100% por el almacenamiento en la nube y la transferencia digital. Su permanencia en la canasta le quita peso relativo a los insumos de almacenamiento informático moderno.</td>
+        </tr>
+        <tr>
+          <td>
+            Alquiler de películas en formato físico<br>
+            <span class="tag tag-rojo">Videoclubes</span>
+          </td>
+          <td>Mercado inexistente en el tejido comercial contemporáneo. El gasto asignado a este rubro debió ser transferido íntegramente a los servicios de distribución digital (Streaming).</td>
+        </tr>
+        <tr>
+          <td>
+            Revelado fotográfico y rollos analógicos<br>
+            <span class="tag tag-rojo">Nicho / Coleccionismo</span>
+          </td>
+          <td>Gasto marginal asociado a nichos profesionales o de coleccionismo, carente de relevancia en el presupuesto del consumidor promedio actual.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-oro">
+      <strong>⚙ Sesgo de obsolescencia del producto</strong>
+      Mantener estos elementos genera un sesgo a la baja en períodos de alta inflación de servicios. Los bienes tecnológicos obsoletos tienden a mostrar variaciones de precios atípicas o nulas debido a la liquidación de stocks remanentes, amortiguando artificialmente el índice general frente a aceleraciones nominales en otros sectores.
+    </div>
+  </section>
+
+  <!-- TAB 3: VACÍO DIGITAL -->
+  <section class="tab-panel" id="panel-2">
+    <div class="section-label">Sección 3 · Ausencias Críticas</div>
+    <h2 class="section-title">El Vacío Digital:<br><em>lo que falta con urgencia</em></h2>
+
+    <p class="lead">A la inversa del fenómeno anterior, la canasta vigente sufre de una severa sub-representación de la economía de plataformas y servicios digitales, que hoy constituyen costos fijos ineludibles para la clase media y trabajadora.</p>
+
+    <div class="cards-grid">
+      <div class="card azul">
+        <div class="card-icon">📱</div>
+        <h3>Economía de Suscripción</h3>
+        <p>SaaS, streaming, almacenamiento en la nube y software profesional quedan subsumidos en "otros servicios culturales", perdiendo su ponderación específica real.</p>
+        <br>
+        <span class="tag tag-azul">Netflix</span>
+        <span class="tag tag-azul">Spotify</span>
+        <span class="tag tag-azul">Office 365</span>
+        <span class="tag tag-azul">Google One</span>
+      </div>
+      <div class="card oro">
+        <div class="card-icon">🛵</div>
+        <h3>Logística de Última Milla</h3>
+        <p>El gasto mensual en plataformas de delivery y transporte privado ha modificado sustancialmente los rubros "Transporte" y "Comidas fuera del hogar", sin canal de captura segregado.</p>
+        <br>
+        <span class="tag tag-oro">PedidosYa</span>
+        <span class="tag tag-oro">Rappi</span>
+        <span class="tag tag-oro">Uber</span>
+        <span class="tag tag-oro">Cabify</span>
+      </div>
+      <div class="card rojo">
+        <div class="card-icon">📡</div>
+        <h3>Conectividad y Datos Móviles</h3>
+        <p>La ponderación está calibrada bajo parámetros de telefonía fija residencial. Los paquetes de datos móviles son hoy un insumo básico comparable a la energía eléctrica.</p>
+        <br>
+        <span class="tag tag-rojo">4G / 5G</span>
+        <span class="tag tag-rojo">Fibra óptica</span>
+        <span class="tag tag-rojo">Wi-Fi hogareño</span>
+      </div>
+      <div class="card menta">
+        <div class="card-icon">💳</div>
+        <h3>Fintech y Ecosistema Financiero</h3>
+        <p>Comisiones de billeteras virtuales, transferencias e intereses de financiamiento digital no se capturan en un mercado donde el efectivo pierde terreno aceleradamente.</p>
+        <br>
+        <span class="tag tag-menta">Mercado Pago</span>
+        <span class="tag tag-menta">Ualá</span>
+        <span class="tag tag-menta">Naranja X</span>
+      </div>
+    </div>
+
+    <div class="callout callout-azul">
+      <strong>🔍 Diagnóstico</strong>
+      La ausencia de estas categorías no es un detalle metodológico menor: implica que la inflación que efectivamente absorbe el ingreso disponible de los hogares urbanos argentinos es sistemáticamente más alta que la registrada por el IPC oficial, particularmente en los estratos medios dependientes de servicios digitales.
+    </div>
+  </section>
+
+  <!-- TAB 4: HETEROGENEIDAD -->
+  <section class="tab-panel" id="panel-3">
+    <div class="section-label">Sección 4 · Crítica Estructural</div>
+    <h2 class="section-title">La Falacia del Promedio frente a la<br><em>Heterogeneidad Estructural</em></h2>
+
+    <p class="lead">El diseño de un IPC único nacional asume un "consumidor promedio" que en términos estadísticos presenta una varianza tan elevada que el promedio pierde significancia. Argentina presenta tres vectores de heterogeneidad que destrozan la métrica centralizada.</p>
+
+    <hr class="divider">
+
+    <ul class="impact-list">
+      <li>
+        <div class="impact-num">A</div>
+        <div class="impact-content">
+          <h4>Fragmentación Socioeconómica — Sesgo Distribucional</h4>
+          <p>En los deciles de ingresos bajos, el gasto en Alimentos y Bebidas no Alcohólicas supera el <strong>45% del ingreso disponible</strong>. En los deciles superiores, este porcentaje cae por debajo del 15%, volcándose hacia servicios privados (salud, educación, tecnología). Al subestimar el peso de los servicios modernos por utilizar la base 2004, el IPC puede estar sobrerrepresentando o subrepresentando el impacto inflacionario real según el estrato social, impidiendo una calibración óptima de las paritarias laborales y los planes de asistencia social.</p>
+        </div>
+      </li>
+      <li>
+        <div class="impact-num">B</div>
+        <div class="impact-content">
+          <h4>Informalidad Estructural de la Economía</h4>
+          <p>El IPC del INDEC releva precios fundamentalmente en el circuito comercial formal y grandes cadenas de supermercados. Sin embargo, una porción masiva de la población transacciona en canales informales —comercios de cercanía no registrados, ferias regionales, mercados de proximidad— donde la dispersión de precios es total y los mecanismos de transmisión monetaria operan con rezagos y sobrecostos. Un índice que ignora la dinámica del sector informal introduce un <strong>sesgo de subestimación sistemática</strong> en contextos de fuerte contracción de la oferta.</p>
+        </div>
+      </li>
+      <li>
+        <div class="impact-num">C</div>
+        <div class="impact-content">
+          <h4>Heterogeneidad Productiva y Regional</h4>
+          <p>Los subsidios cruzados a las tarifas de servicios públicos y el transporte distorsionan las canastas regionales. Mientras el AMBA exhibe una estructura de gasto muy influenciada por la dinámica tarifaria regulada, las regiones del NOA, NEA y la Patagonia enfrentan estructuras de costos logísticos y de combustibles totalmente disímiles. El IPC Nacional tiende a ponderar con <strong>excesivo sesgo centralista</strong>, invisibilizando shocks de precios relativos en el interior productivo.</p>
+        </div>
+      </li>
+    </ul>
+
+    <div class="callout callout-menta">
+      <strong>💡 Implicancia</strong>
+      Un índice unificado construido sobre una ENGHo 2004/2005 aplicado a la Argentina de 2026 equivale a usar el mismo mapa topográfico para navegar tres continentes distintos. La escala está bien, pero el territorio ya no existe.
+    </div>
+  </section>
+
+  <!-- TAB 5: EFECTO CASCADA -->
+  <section class="tab-panel" id="panel-4">
+    <div class="section-label">Sección 5 · Contaminación Sistémica</div>
+    <h2 class="section-title">El Efecto Cascada:<br><em>indicadores y modelos viciados</em></h2>
+
+    <p class="lead">El error metodológico del IPC no se agota en su propia cifra. Actúa como un vector de contaminación que introduce sesgos críticos en todo el sistema de estadísticas públicas y en los modelos de proyección del sector privado.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Indicador / Modelo Afectado</th>
+          <th>Mecanismo de Contaminación y Vicio Estadístico</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            Líneas de Pobreza e Indigencia<br>
+            <span class="tag tag-rojo">CBA y CBT</span>
+          </td>
+          <td>La Canasta Básica Total se calcula aplicando el coeficiente de Engel derivado de la ENGHo 2004/2005. Al estar subestimado el peso real de los servicios modernos indispensables, el valor de la CBT está subvaluado. Esto genera una <strong>subestimación sistemática de la tasa de pobreza</strong> en condiciones de aumentos de tarifas.</td>
+        </tr>
+        <tr>
+          <td>
+            PBI Real y Cuentas Nacionales<br>
+            <span class="tag tag-rojo">Deflactores sectoriales</span>
+          </td>
+          <td>Para deflactar las series nominales, se emplean índices de precios sectoriales derivados de la matriz del IPC. Si los deflactores contienen ponderaciones distorsionadas —sobrepeso en bienes analógicos frente a digitales—, el cálculo del crecimiento o contracción real incorpora un <strong>severo error de medición</strong>.</td>
+        </tr>
+        <tr>
+          <td>
+            Índices de Salario Real<br>
+            <span class="tag tag-oro">RIPTE e INDEC</span>
+          </td>
+          <td>La evolución del poder adquisitivo se obtiene deflactando los salarios nominales por el IPC. Un IPC viciado <strong>sobreestima la capacidad de compra real</strong> de los trabajadores de ingresos medios y altos (que consumen los servicios omitidos) y distorsiona el análisis de productividad laboral.</td>
+        </tr>
+        <tr>
+          <td>
+            Modelos Financieros Privados<br>
+            <span class="tag tag-azul">Ecuación de Fisher · Curvas CER</span>
+          </td>
+          <td>Las firmas de consultoría y Asset Management calibran sus modelos de valuación de activos utilizando datos del IPC. Al heredar una inflación subestimada por el efecto canasta, las proyecciones de tasas reales de interés y las valuaciones de las curvas de bonos atados al CER incorporan <strong>primas de riesgo distorsionadas</strong>, afectando las decisiones de asignación de capital.</td>
+        </tr>
+        <tr>
+          <td>
+            Relevamiento de Expectativas de Mercado<br>
+            <span class="tag tag-azul">REM — BCRA</span>
+          </td>
+          <td>El REM sufre del <strong>sesgo de anclaje</strong>: los analistas proyectan sus estimaciones sobre la base de la métrica oficial esperada. Si la métrica oficial está viciada, las expectativas consolidadas se construyen sobre una ficción estadística, disociando las proyecciones macroeconómicas corporativas de la inflación de costos real de las empresas.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-rojo">
+      <strong>⚡ Riesgo sistémico</strong>
+      Un IPC viciado no es solo un problema de estadística pública: es una falla de infraestructura epistemológica que contamina decisiones de inversión, política salarial, política social y estrategia corporativa en simultáneo. El costo no es anecdótico; es macroeconómico.
+    </div>
+  </section>
+
+  <!-- TAB 6: CONCLUSIÓN -->
+  <section class="tab-panel" id="panel-5">
+    <div class="section-label">Sección 6 · Cierre y Recomendaciones</div>
+    <h2 class="section-title">Conclusión:<br><em>el termómetro que miente</em></h2>
+
+    <p class="lead">La persistencia de una metodología del año 2004 para medir la inflación en 2026 invalida parcialmente la capacidad diagnóstica del IPC como termómetro de la estabilidad monetaria.</p>
+
+    <p>Para los tomadores de decisiones en el ámbito de la estrategia corporativa, el diseño de proyectos de inversión y la consultoría, resulta imperativo aplicar factores de ajuste internos y desarrollar indicadores sintéticos alternativos que logren capturar la verdadera velocidad de circulación y destrucción del valor del signo monetario en los distintos estratos de la economía real.</p>
+
+    <hr class="divider">
+
+    <h3 style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:18px;color:var(--azul);">Recomendaciones Operativas</h3>
+
+    <ul class="impact-list">
+      <li>
+        <div class="impact-num" style="background:var(--rojo);">1</div>
+        <div class="impact-content">
+          <h4>Aplicar factores de ajuste internos</h4>
+          <p>No confiar en el IPC oficial como deflactor único. Construir canastas ad-hoc por perfil de cliente/sector, con ponderaciones actualizadas a los patrones de consumo reales de 2024-2026.</p>
+        </div>
+      </li>
+      <li>
+        <div class="impact-num" style="background:var(--oro);color:var(--gris-texto);">2</div>
+        <div class="impact-content">
+          <h4>Desarrollar indicadores sintéticos alternativos</h4>
+          <p>Construir IPCs sectoriales internos que incorporen servicios digitales, logística, conectividad y costos del ecosistema fintech, especialmente para modelos de valuación atados al CER.</p>
+        </div>
+      </li>
+      <li>
+        <div class="impact-num" style="background:var(--azul);">3</div>
+        <div class="impact-content">
+          <h4>Estratificar el análisis inflacionario</h4>
+          <p>Abandonar la hipótesis del "consumidor promedio". El análisis debe segmentar por decil de ingreso, región geográfica y grado de digitalización del hogar para generar diagnósticos accionables.</p>
+        </div>
+      </li>
+      <li>
+        <div class="impact-num" style="background:#2EA84D;">4</div>
+        <div class="impact-content">
+          <h4>Exigir y monitorear la actualización oficial</h4>
+          <p>Presionar institucionalmente por la implementación de la ENGHo 2017/2018 y el diseño de un mecanismo de actualización periódica de la canasta, idealmente con revisión quinquenal automatizada.</p>
+        </div>
+      </li>
+    </ul>
+
+    <div class="conclusion-block">
+      <h3>Un termómetro roto no cura la fiebre</h3>
+      <p>Un índice construido sobre la realidad de 2004 no puede orientar correctamente las decisiones de política monetaria, fiscal o salarial de 2026. La Argentina no tiene solo un problema de inflación alta: tiene un problema de inflación que no puede medirse con precisión. Y eso, en términos de gestión macroeconómica y estrategia de inversión, es aún más peligroso.</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  function switchTab(index) {
+    document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', i === index);
+    });
+    document.querySelectorAll('.tab-panel').forEach((panel, i) => {
+      panel.classList.toggle('active', i === index);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
